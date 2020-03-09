@@ -103,12 +103,15 @@ namespace ServerSocketInterface {
                     Console.WriteLine("Read {0} bytes from socket. Data : {1}",
                         content.Length, content);
                     // Echo the data back to the client.
-                    if (content.Contains("playing")) { 
-                        Send(handler, ServerSocketInterface.instance.GetOnlinePlayers());
-                    } else if (content.StartsWith("say ")) {
+                    if (content.StartsWith("say ")) {
                         content = content.Substring(4, content.Length-9);
                         content.Replace("\n", "");
                         ServerSocketInterface.instance.SendMsg(content);
+                        Send(handler, "done");
+                    } else if (content.StartsWith("playing")) { 
+                        Send(handler, ServerSocketInterface.instance.GetOnlinePlayers());
+                    } else if (content.StartsWith("restart ")) {
+                        ServerSocketInterface.instance.Restart(content.Substring(8, content.Length-13));
                         Send(handler, "done");
                     } else {
                         Send(handler, content);

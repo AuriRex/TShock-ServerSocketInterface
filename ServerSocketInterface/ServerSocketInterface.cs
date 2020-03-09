@@ -86,8 +86,13 @@ namespace ServerSocketInterface {
             if (TShockAPI.TShock.Players != null)
                 foreach (TShockAPI.TSPlayer ply in TShockAPI.TShock.Players) {
                     if(ply != null)
-                        ply.SendSuccessMessage(msg);
+                        //ply.SendSuccessMessage(msg);
+                        ply.SendMessage(msg, 255, 255, 255);
                 }
+        }
+
+        public void Restart(String reason) {
+            TShockAPI.Utils.Instance.RestartServer(true, reason);
         }
 
         public String GetOnlinePlayers() {
