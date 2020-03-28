@@ -110,6 +110,32 @@ namespace ServerSocketInterface {
                         content.Replace("\n", "");
                         ServerSocketInterface.instance.SendMsg(content);
                         Send(handler, "done");
+                    } else if (content.StartsWith("itemid ")) {
+                        content = content.Substring(7, content.Length - 12); // 7 + 5
+                        content.Replace("\n", "");
+                        // ServerSocketInterface.instance.SendMsg(content);
+                        int item_id = 0;
+                        try {
+                            item_id = Int16.Parse(content);
+                        } catch(FormatException ex) {
+                            Console.WriteLine("Server received invalid item id! \"" + item_id + "\" - " + ex.GetType().ToString());
+                            Send(handler, "Error");
+                            return;
+                        }
+                        Send(handler, ServerSocketInterface.instance.getItemName(item_id));
+                    } else if (content.StartsWith("prefid ")) {
+                        content = content.Substring(7, content.Length - 12); // 7 + 5
+                        content.Replace("\n", "");
+                        // ServerSocketInterface.instance.SendMsg(content);
+                        int prefix_id = 0;
+                        try {
+                            prefix_id = Int16.Parse(content);
+                        } catch (FormatException ex) {
+                            Console.WriteLine("Server received invalid Prefix id! \"" + prefix_id + "\" - " + ex.GetType().ToString());
+                            Send(handler, "Error");
+                            return;
+                        }
+                        Send(handler, ServerSocketInterface.instance.getPrefixName(prefix_id));
                     } else {
                         Send(handler, content);
                     }

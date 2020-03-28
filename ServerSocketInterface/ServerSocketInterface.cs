@@ -102,6 +102,35 @@ namespace ServerSocketInterface {
             return ret;
         }
 
+        public String getItemName(int id) {
+            String ret = "";
+
+            try {
+                ret = TShockAPI.Utils.Instance.GetItemById(id).Name;
+                
+            } catch (Exception ex) {
+                ret = "Exception";
+            }
+
+            if (ret.Equals("")) ret = "Error";
+
+            return ret;
+        }
+
+        public String getPrefixName(int id) {
+            String ret = "";
+
+            try {
+                ret = TShockAPI.Utils.Instance.GetPrefixById(id);
+            } catch (Exception ex) {
+                ret = "Exception";
+            }
+
+            if (ret.Equals("")) ret = "Error";
+
+            return ret;
+        }
+
         void OnServerJoin(JoinEventArgs args) {
             if (args != null) {
                 if (TShockAPI.TShock.Players[args.Who] != null) {
